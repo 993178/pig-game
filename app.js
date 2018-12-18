@@ -35,21 +35,38 @@ document.querySelector('.btn-roll').addEventListener('click', function() {      
         roundScore += die;       // met alleen + krijg je alleen de laatste gooi plus de huidige gooi, maar je wilt ze ook alledrie/-vier/etc, sukkel
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
-        // de roundScore gaat hier het raam uit. Nu is de beurt aan de andere speler
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-        roundScore = 0;
-
-        document.getElementById('current-0').textContent = '0';   // allebei de scores in de browser moeten op 0 staan, anders zit je als 1-gooier nog de hele beurt van de ander tegen je eigen verloren punten aan te kijken en dat zou wreed zijn... Hmmm... :-)
-        document.getElementById('current-1').textContent = '0';   // 0 als string, is de bedoeling
-
-        // document.querySelector('player-0-panel').classList.remove('active'); // selecteer het element 'player-0-panel' en verwijder de class 'active'.
-        // document.querySelector('player-1-panel').classList.add('active')     // toevoegen ipv verwijderen
-
-        document.querySelector('.player-0-panel').classList.toggle('active'); // maak er nu van wat het niet is (voeg toe als het ontbreekt, verwijder als het er is)
-        document.querySelector('.player-1-panel').classList.toggle('active')
-
+        nextPlayer();
     }
+});
+
+
+document.querySelector('.btn-hold').addEventListener('click', function() {
+    //roundScore optellen bij vaste score
+    scores[activePlayer] += roundScore;
+    // nieuwe score laten zien
+    document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+    // beurt overgeven aan andere speler, zelfde als wanneer er 1 gegooid wordt (DIY??)
+    nextPlayer();
+    // controleren of currentScore al boven de 100 zit!
 })
+
+
+function nextPlayer() {
+    // de roundScore gaat weer op nul. Nu is de beurt aan de andere speler
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    roundScore = 0;
+
+    document.getElementById('current-0').textContent = '0';   // allebei de scores in de browser moeten op 0 staan, anders zit je als 1-gooier nog de hele beurt van de ander tegen je eigen verloren punten aan te kijken en dat zou wreed zijn... Hmmm... :-)
+    document.getElementById('current-1').textContent = '0';   // 0 als string, is de bedoeling
+
+    // document.querySelector('player-0-panel').classList.remove('active'); // selecteer het element 'player-0-panel' en verwijder de class 'active'.
+    // document.querySelector('player-1-panel').classList.add('active')     // toevoegen ipv verwijderen
+
+    document.querySelector('.player-0-panel').classList.toggle('active'); // maak er nu van wat het niet is (voeg toe als het ontbreekt, verwijder als het er is)
+    document.querySelector('.player-1-panel').classList.toggle('active')
+    document.querySelector('.dice').style.display = 'none';     // ik vind het eigenlijk niet logisch om het plaatje te verbergen als er 1 is gegooid - je wilt de ramp toch ZIEN?! (en waarom heb je anders dat plaatje??)
+}
+
 
 
 
