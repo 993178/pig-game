@@ -39,7 +39,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];    // nieuwe score laten zien
         
-        if (scores[activePlayer] >= 10) {       // controleren of currentScore al boven de 100 zit!
+        if (scores[activePlayer] >= 100) {       // controleren of currentScore al boven de 100 zit!
             gamePlaying = false;        //ik zou hier ook de knoppen Roll dice en Hold op display: none willen zetten om spelers te dwingen een nieuw spelletje te beginnen... >> opgelost met gamePlaying, dat schakelt de functionaliteit uit
             document.querySelector('#name-' + activePlayer).textContent = 'WINNER!!1!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
