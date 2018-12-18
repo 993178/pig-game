@@ -17,7 +17,7 @@ activePlayer = 0;
 
 document.querySelector('.dice').style.display = 'none'; // we selecteren een element, nl een div genaamd dice (zie die CSS-selector), gaan aan de CSS morrelen (style) en wel aan property 'display', die we op 'none' zetten
 document.getElementById('score-0').textContent = '0';   // een ID-element direct als ID-element zoeken is sneller dan querySelector. 
-document.getElementById('current-0').textContent = '0';
+document.getElementById('current-0').textContent = '0'; // LET OP: bij getElementById gebruik je dus alleen de naam van het ID-element, maar bij querySelector moet er wel de # of . voor, anders no dice.
 document.getElementById('score-1').textContent = '0';
 document.getElementById('current-1').textContent = '0';
 
@@ -32,9 +32,22 @@ document.querySelector('.btn-roll').addEventListener('click', function() {      
 
     // update roundScore, maar alleen als getal niet 1 is
     if (die !== 1) {
-        return roundScore += die;       // met alleen + krijg je alleen de laatste gooi plus de huidige gooi, maar je wilt ze ook alledrie/-vier/etc, sukkel
+        roundScore += die;       // met alleen + krijg je alleen de laatste gooi plus de huidige gooi, maar je wilt ze ook alledrie/-vier/etc, sukkel
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
-        return roundScore = 0;
+        // de roundScore gaat hier het raam uit. Nu is de beurt aan de andere speler
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        roundScore = 0;
+
+        document.getElementById('current-0').textContent = '0';   // allebei de scores in de browser moeten op 0 staan, anders zit je als 1-gooier nog de hele beurt van de ander tegen je eigen verloren punten aan te kijken en dat zou wreed zijn... Hmmm... :-)
+        document.getElementById('current-1').textContent = '0';   // 0 als string, is de bedoeling
+
+        // document.querySelector('player-0-panel').classList.remove('active'); // selecteer het element 'player-0-panel' en verwijder de class 'active'.
+        // document.querySelector('player-1-panel').classList.add('active')     // toevoegen ipv verwijderen
+
+        document.querySelector('.player-0-panel').classList.toggle('active'); // maak er nu van wat het niet is (voeg toe als het ontbreekt, verwijder als het er is)
+        document.querySelector('.player-1-panel').classList.toggle('active')
+
     }
 })
 
