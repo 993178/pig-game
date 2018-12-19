@@ -14,34 +14,38 @@ Opdracht 1
     A player loses his entire score if he rolls two sixes in a row. After that, it's the next player's turn. (Hint: 
     always save the previous dice roll in a separate variabele.)
 
-Opdracht 2
-    Add an input field to the HTML where players can set the winning score, so that they can change the predefined score 
-    of 100. (Hint: you can read that value with the .value property in JavaScript. This is a good opportunity to use 
-    Google to figure that out :-)  )
-
-Opdracht 3
-    Add another die to the game, so that there are two dice now. The player loses his current score when one of them is 
-    a 1. (Hint: you will need to position the second die, so take a look at the CSS code for the first one.)
-
+        Okee, dus... je hebt de die, dat is wat er nu gegooid is, en je hebt de roundScore, die het resultaat is van de 
+        staande score plus de die. Daar moet er dus één tussenin die de vorige die-waarde bewaart los van de roundScore 
+        en los van de nieuwe die-waarde.
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, prevScore, die, last2;
 
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {          // ipv een aparte functie met naam ergens te definiëren en die dan hier te noemen (niet callen) als callbackfunctie gooien we de hele (anonieme) functie gewoon in z'n geheel hierin, aangezien we hem toch maar 1x gaan gebruiken
     if (gamePlaying) {  // al het onderstaande gebeurt nu dus alleen als het spel aan de gang is
-        
-        var die = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
-        
+        prevScore = die;
+        console.log(prevScore);
+        die = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
+        console.log(die);
+        last2 = prevScore + die;
+        console.log(last2);
+
         var diceDOM = document.querySelector('.dice')       // steeds weer zo'n ding selecteren kost moeite, dus gooien we hem in een variabele zodat we daarna die kunnen gebruiken (zie volgende regel)
         diceDOM.style.display = 'block';        // dobbelsteen zichtbaar maken
         diceDOM.src = 'dice-' + die + '.png';            // dobbelsteen met juiste hoeveelheid stippen doorgeven aan DOM, met gebruikmaking van JS type coercion
         
-        if (die !== 1) {            // update roundScore, maar alleen als getal niet 1 is
-            roundScore += die;       // met alleen + krijg je alleen de laatste gooi plus de huidige gooi, maar je wilt ze ook alledrie/-vier/etc, sukkel
+        if (die !== 1 && last2 !== 12) {            // update roundScore, maar alleen als getal niet 1 is
+            roundScore += die;
+            prevScore 
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        } else if (last2 = 12) {
+            scores[activePlayer] = 0;
+            console.log(scores);
+            document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+            nextPlayer();
         } else {
             nextPlayer();
         }
@@ -72,6 +76,7 @@ function nextPlayer() {
     // de roundScore gaat weer op nul. Nu is de beurt aan de andere speler
     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
     roundScore = 0;
+    prevScore = 0;
 
     document.getElementById('current-0').textContent = '0';   // allebei de scores in de browser moeten op 0 staan, anders zit je als 1-gooier nog de hele beurt van de ander tegen je eigen verloren punten aan te kijken en dat zou wreed zijn... Hmmm... :-)
     document.getElementById('current-1').textContent = '0';   // 0 als string, is de bedoeling
@@ -89,6 +94,7 @@ function init() {
     scores = [0,0];
     roundScore = 0;
     activePlayer = 0;
+    prevScore = 0;
     gamePlaying = true;
 
     document.querySelector('.dice').style.display = 'none'; // we selecteren een element, nl een div genaamd dice (zie die CSS-selector), gaan aan de CSS morrelen (style) en wel aan property 'display', die we op 'none' zetten

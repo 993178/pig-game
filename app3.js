@@ -7,22 +7,9 @@ GAME RULES:
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
 - The first player to reach 100 points on GLOBAL score wins the game
 
-
-
-
-Opdracht 1
-    A player loses his entire score if he rolls two sixes in a row. After that, it's the next player's turn. (Hint: 
-    always save the previous dice roll in a separate variabele.)
-
-Opdracht 2
-    Add an input field to the HTML where players can set the winning score, so that they can change the predefined score 
-    of 100. (Hint: you can read that value with the .value property in JavaScript. This is a good opportunity to use 
-    Google to figure that out :-)  )
-
 Opdracht 3
     Add another die to the game, so that there are two dice now. The player loses his current score when one of them is 
     a 1. (Hint: you will need to position the second die, so take a look at the CSS code for the first one.)
-
 
 */
 

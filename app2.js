@@ -8,25 +8,18 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 
-
-
-Opdracht 1
-    A player loses his entire score if he rolls two sixes in a row. After that, it's the next player's turn. (Hint: 
-    always save the previous dice roll in a separate variabele.)
-
 Opdracht 2
     Add an input field to the HTML where players can set the winning score, so that they can change the predefined score 
     of 100. (Hint: you can read that value with the .value property in JavaScript. This is a good opportunity to use 
     Google to figure that out :-)  )
 
-Opdracht 3
-    Add another die to the game, so that there are two dice now. The player loses his current score when one of them is 
-    a 1. (Hint: you will need to position the second die, so take a look at the CSS code for the first one.)
-
+        ik wil hier eigenlijk een knop voor toevoegen die zo'n window.invoerschermpje pop-upt. prompt? 
+        amai dat ging verrassend makkelijk
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying;
+var scores, roundScore, activePlayer, gamePlaying, goal;
+goal = 100;
 
 init();
 
@@ -56,7 +49,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         
         document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];    // nieuwe score laten zien
         
-        if (scores[activePlayer] >= 100) {       // controleren of currentScore al boven de 100 zit!
+        if (scores[activePlayer] >= goal) {       // controleren of currentScore al boven de 100 zit!
             gamePlaying = false;        //ik zou hier ook de knoppen Roll dice en Hold op display: none willen zetten om spelers te dwingen een nieuw spelletje te beginnen... >> opgelost met gamePlaying, dat schakelt de functionaliteit uit
             document.querySelector('#name-' + activePlayer).textContent = 'WINNER!!1!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
@@ -104,6 +97,17 @@ function init() {
     document.getElementById('name-0').textContent = 'Player 1';
     document.getElementById('name-1').textContent = 'Player 2';
 }
+
+document.querySelector('.btn-goal').addEventListener('click', function() {
+    goal = window.prompt('change goal');
+    init();
+});
+
+
+
+
+
+
 
 
 //document.querySelector('#current-' + activePlayer).textContent = die;   // Je zoekt&selecteert het juiste html-element - (type coercion maakt dat je '#current-' + variabele kunt schrijven en ermee wegkomt) - en dat textContent is een methode om tekst in te voegen (maar ALLEEN tekst). Dat stel je dan gelijk aan de uitkomst van var die.  = setter
