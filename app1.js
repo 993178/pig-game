@@ -20,18 +20,15 @@ Opdracht 1
 
 */
 
-var scores, roundScore, activePlayer, gamePlaying, prevScore, die, last2;
+var scores, roundScore, activePlayer, gamePlaying, prevScore;
 
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {          // ipv een aparte functie met naam ergens te definiëren en die dan hier te noemen (niet callen) als callbackfunctie gooien we de hele (anonieme) functie gewoon in z'n geheel hierin, aangezien we hem toch maar 1x gaan gebruiken
     if (gamePlaying) {  // al het onderstaande gebeurt nu dus alleen als het spel aan de gang is
-        prevScore = die;
-        console.log(prevScore);
-        die = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
-        console.log(die);
-        last2 = prevScore + die;
-        console.log(last2);
+        prevScore = die;                        // okee Jonas declaret zijn versie idd globaal, maar - slimmer - assignt hem pas aan het einde van deze functie onder de if/else, zodat je niet begint met undefined. 'die' declaret hij nog steeds hier.
+        var die = Math.ceil(Math.random() * 6);
+        var last2 = prevScore + die;                // Jonas gebruikt natuurlijk ook geen extra variabele maar gewoon (die === 6 && prevScore === 6)
 
         var diceDOM = document.querySelector('.dice')       // steeds weer zo'n ding selecteren kost moeite, dus gooien we hem in een variabele zodat we daarna die kunnen gebruiken (zie volgende regel)
         diceDOM.style.display = 'block';        // dobbelsteen zichtbaar maken
@@ -43,7 +40,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {      
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
         } else if (last2 = 12) {
             scores[activePlayer] = 0;
-            console.log(scores);
+            //console.log(scores);
             document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
             nextPlayer();
         } else {

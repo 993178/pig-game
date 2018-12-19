@@ -20,14 +20,20 @@ init();
 document.querySelector('.btn-roll').addEventListener('click', function() {          // ipv een aparte functie met naam ergens te definiëren en die dan hier te noemen (niet callen) als callbackfunctie gooien we de hele (anonieme) functie gewoon in z'n geheel hierin, aangezien we hem toch maar 1x gaan gebruiken
     if (gamePlaying) {  // al het onderstaande gebeurt nu dus alleen als het spel aan de gang is
         
-        var die = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
+        var die1 = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
+        var die2 = Math.ceil(Math.random() * 6);         // willekeurig getal tussen 1 en 6. We gebruiken 'die' alleen hier, dus die hoeft niet in de global scope. '"die"??' het is maar één dobbelsteen... *lacht onschuldig*
+
+
+        var die1DOM = document.querySelector('.die1')       // steeds weer zo'n ding selecteren kost moeite, dus gooien we hem in een variabele zodat we daarna die kunnen gebruiken (zie volgende regel)
+        die1DOM.style.display = 'block';                // dobbelsteen zichtbaar maken
+        die1DOM.src = 'dice-' + die1 + '.png';            // dobbelsteen met juiste hoeveelheid stippen doorgeven aan DOM, met gebruikmaking van JS type coercion
         
-        var diceDOM = document.querySelector('.dice')       // steeds weer zo'n ding selecteren kost moeite, dus gooien we hem in een variabele zodat we daarna die kunnen gebruiken (zie volgende regel)
-        diceDOM.style.display = 'block';        // dobbelsteen zichtbaar maken
-        diceDOM.src = 'dice-' + die + '.png';            // dobbelsteen met juiste hoeveelheid stippen doorgeven aan DOM, met gebruikmaking van JS type coercion
-        
-        if (die !== 1) {            // update roundScore, maar alleen als getal niet 1 is
-            roundScore += die;       // met alleen + krijg je alleen de laatste gooi plus de huidige gooi, maar je wilt ze ook alledrie/-vier/etc, sukkel
+        var die2DOM = document.querySelector('.die2') 
+        die2DOM.style.display = 'block';
+        die2DOM.src = 'dice-' + die2 + '.png';
+
+        if (die1 !== 1 && die2 !== 1) {  
+            roundScore += die1 + die2;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
         } else {
             nextPlayer();
@@ -48,7 +54,9 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
             document.querySelector('#name-' + activePlayer).textContent = 'WINNER!!1!';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
-            document.querySelector('.dice').style.display = 'none'; // Jonas: dit moet je niet te veel doen, een class toevoegen en weghalen is beter
+            document.querySelector('.die1').style.display = 'none';
+            document.querySelector('.die2').style.display = 'none';
+
         } else {
             nextPlayer(); // beurt overgeven aan andere speler, zelfde als wanneer er 1 gegooid wordt
         }
@@ -64,7 +72,8 @@ function nextPlayer() {
     document.getElementById('current-1').textContent = '0';   // 0 als string, is de bedoeling
     document.querySelector('.player-0-panel').classList.toggle('active'); // maak er nu van wat het niet is (voeg toe als het ontbreekt, verwijder als het er is)
     document.querySelector('.player-1-panel').classList.toggle('active')
-    document.querySelector('.dice').style.display = 'none';     // ik vind het eigenlijk niet logisch om het plaatje te verbergen als er 1 is gegooid - je wilt de ramp toch ZIEN?! (en waarom heb je anders dat plaatje??)
+    document.querySelector('.die1').style.display = 'none';
+    document.querySelector('.die2').style.display = 'none';
 
     // document.querySelector('.player-0-panel').classList.remove('active'); // selecteer het element 'player-0-panel' en verwijder de class 'active'.
     // document.querySelector('.player-1-panel').classList.add('active')     // toevoegen ipv verwijderen
@@ -78,7 +87,9 @@ function init() {
     activePlayer = 0;
     gamePlaying = true;
 
-    document.querySelector('.dice').style.display = 'none'; // we selecteren een element, nl een div genaamd dice (zie die CSS-selector), gaan aan de CSS morrelen (style) en wel aan property 'display', die we op 'none' zetten
+    document.querySelector('.die1').style.display = 'none'; // we selecteren een element, nl een div genaamd dice (zie die CSS-selector), gaan aan de CSS morrelen (style) en wel aan property 'display', die we op 'none' zetten
+    document.querySelector('.die2').style.display = 'none';
+
     document.getElementById('score-0').textContent = '0';   // een ID-element direct als ID-element zoeken is sneller dan querySelector. 
     document.getElementById('current-0').textContent = '0'; // LET OP: bij getElementById gebruik je dus alleen de naam van het ID-element, maar bij querySelector moet er wel de # of . voor, anders no dice.
     document.getElementById('score-1').textContent = '0';
